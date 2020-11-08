@@ -1,0 +1,16 @@
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+ - WeatherForecastTests
+ - WeatherForecastUITests
+disabled_rules: # rule identifiers to exclude from running
+ - trailing_whitespace
+ - line_length
+ - nesting
+type_name:
+  min_length: 3
+  max_length: 50
+identifier_name:
+  min_length: 2
+  max_length: 50
+cyclomatic_complexity: 13
+function_parameter_count: 7
+function_body_length: 60

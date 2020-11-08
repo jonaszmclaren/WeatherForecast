@@ -1,0 +1,95 @@
+name: WeatherForecast
+settings:
+  CODE_SIGN_STYLE: Manual
+  SWIFT_VERSION: 5
+  DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+options:
+  bundleIdPrefix: com.baron.jonasz.WeatherForecast
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: 14.0
+configs:
+  Debug:
+    DEBUG_MODE: YES
+  Release:
+    DEBUG_MODE: NO
+configFiles:
+  Debug: WeatherForecast/Configuration/Debug.xcconfig
+  Release: WeatherForecast/Configuration/Release.xcconfig
+packages:
+  Alamofire:
+    url: https://github.com/Alamofire/Alamofire
+    from: 5.0.0
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher
+    from: 5.13.0
+  Nimble:
+    url: https://github.com/Quick/Nimble
+    from: 8.0.0
+  Quick:
+    url: https://github.com/Quick/Quick
+    from: 2.2.0
+  Regex:
+    url: https://github.com/sharplet/Regex
+    from: 2.1.0
+  SnapKit:
+    url: https://github.com/SnapKit/SnapKit
+    from: 5.0.1
+  Toast:
+    url: https://github.com/scalessec/Toast-Swift
+    from: 5.0.0
+targets:
+  WeatherForecast:
+    sources:
+      - WeatherForecast
+    type: application
+    platform: iOS
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: 1,2
+        PRODUCT_BUNDLE_IDENTIFIER: $(PRODUCT_BUNDLE_IDENTIFIER)
+    gatherCoverageData: true
+    postBuildScripts:
+      - path: swiftlint.sh
+    dependencies:
+      - package: Alamofire
+      - package: Kingfisher
+      - package: Regex
+      - package: SnapKit
+      - package: Toast
+  WeatherForecastUnitTest:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - WeatherForecastTests
+    dependencies:
+      - target: WeatherForecast
+      - package: Quick
+      - package: Nimble
+  WeatherForecastUITest:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - WeatherForecastUITests
+    settings:
+      TEST_HOST:
+    dependencies:
+      - target: WeatherForecast
+schemes:
+  WeatherForecast:
+    build:
+      targets:
+        WeatherForecast: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - WeatherForecastUnitTest
+    profile:
+      config: Debug
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+      customArchiveName: WeatherForecast
